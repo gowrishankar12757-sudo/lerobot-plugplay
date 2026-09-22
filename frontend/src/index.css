@@ -1,0 +1,279 @@
+:root {
+  color-scheme: dark;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+  background: #0b0f16;
+  color: #e5e7eb;
+}
+
+.app-root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 10px 16px;
+  background: #111827;
+  border-bottom: 1px solid #1f2937;
+  flex-wrap: wrap;
+}
+
+.brand-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.2;
+  white-space: nowrap;
+  background: rgba(17, 24, 39, 0.8);
+  border: 1px solid #1f2937;
+  border-radius: 8px;
+  padding: 8px 12px;
+  pointer-events: none;
+}
+
+.brand-panel-name {
+  font-weight: 700;
+  font-size: 19px;
+  color: #f9fafb;
+}
+
+.brand-panel-sub {
+  font-size: 13px;
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+.action-map-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: #f9fafb;
+  letter-spacing: 0.5px;
+  background: rgba(17, 24, 39, 0.8);
+  border: 1px solid #1f2937;
+  border-radius: 8px;
+  padding: 6px 20px;
+  pointer-events: none;
+}
+
+.toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.toolbar-label {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.toolbar-hint {
+  font-size: 12px;
+  color: #6b7280;
+  font-style: italic;
+}
+
+.toolbar-add-port {
+  background: #14532d;
+  border-color: #22c55e;
+}
+
+.canvas-wrap {
+  flex: 1;
+  min-height: 0;
+}
+
+button {
+  background: #1f2937;
+  color: #e5e7eb;
+  border: 1px solid #374151;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  background: #374151;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+input,
+select {
+  background: #0b0f16;
+  color: #e5e7eb;
+  border: 1px solid #374151;
+  border-radius: 4px;
+  padding: 4px 6px;
+  font-size: 12px;
+  width: 100%;
+}
+
+.block-shell {
+  background: #111827;
+  border: 2px solid #4b5563;
+  border-radius: 10px;
+  font-size: 12px;
+  /* deliberately NOT overflow:hidden — that would clip the wire-connector dots,
+     which sit half-outside the card edge, out of the clickable/draggable area */
+}
+
+.block-shell-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  background: #0b0f16;
+  border-bottom: 1px solid #1f2937;
+  border-radius: 8px 8px 0 0;
+}
+
+.block-icon {
+  font-size: 15px;
+}
+
+.block-title {
+  font-weight: 600;
+  flex: 1;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.block-delete {
+  border: none;
+  background: transparent;
+  color: #9ca3af;
+  font-size: 14px;
+  padding: 0 4px;
+}
+
+.block-shell-body {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.block-locked-banner {
+  background: #1f2937;
+  border: 1px dashed #4b5563;
+  border-radius: 6px;
+  padding: 6px 8px;
+  color: #9ca3af;
+  font-size: 11px;
+}
+
+.block-help {
+  color: #9ca3af;
+  margin: 0;
+  font-size: 11px;
+}
+
+.field-row {
+  display: flex;
+  gap: 8px;
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.field-row label {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mono-label {
+  font-family: monospace;
+  font-size: 11px;
+  color: #93c5fd;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.plugged-yes {
+  color: #22c55e;
+  margin: 0;
+  font-size: 11px;
+}
+
+.plugged-no {
+  color: #ef4444;
+  margin: 0;
+  font-size: 11px;
+}
+
+.block-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.quick-keys {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.check-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 11px;
+}
+
+.check-ok {
+  color: #22c55e;
+}
+
+.check-bad {
+  color: #f59e0b;
+}
+
+.react-flow__edge-path {
+  stroke-width: 2.5;
+}
+
+.react-flow__handle {
+  width: 14px;
+  height: 14px;
+  border: 2px solid #0b0f16;
+  z-index: 10;
+}
+
+.react-flow__handle:hover {
+  transform: scale(1.4);
+}
+
+.react-flow__controls button {
+  background: #1f2937;
+  border-bottom: 1px solid #374151;
+  color: #e5e7eb;
+}
