@@ -5,6 +5,7 @@ export interface SystemCheck {
   label: string
   ok: boolean
   fix: string | null
+  optional: boolean
 }
 
 export interface SystemStatus {

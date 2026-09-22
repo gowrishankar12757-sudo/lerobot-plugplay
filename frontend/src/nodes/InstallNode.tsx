@@ -26,8 +26,8 @@ export function InstallNode({ id, data }: { id: string; data: InstallNodeData })
       {systemStatus && (
         <ul className="check-list">
           {systemStatus.checks.map((c) => (
-            <li key={c.id} className={c.ok ? 'check-ok' : 'check-bad'}>
-              {c.ok ? '✓' : '✗'} {c.label}
+            <li key={c.id} className={c.ok ? 'check-ok' : c.optional ? 'check-optional' : 'check-bad'}>
+              {c.ok ? '✓' : c.optional ? '–' : '✗'} {c.label}
             </li>
           ))}
         </ul>

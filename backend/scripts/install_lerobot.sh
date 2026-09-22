@@ -21,15 +21,14 @@ fi
 cd "$REPO" || exit 1
 
 step "Checking system prerequisites"
-missing=0
+if command -v git >/dev/null 2>&1; then ok "git found"; else
+  printf '\n\033[1;31mgit not found — install it first.\033[0m\n'; exit 1
+fi
 if command -v ffmpeg >/dev/null 2>&1; then ok "ffmpeg found ($(ffmpeg -version | head -1))"; else
-  warn "ffmpeg not found — install it (e.g. 'sudo apt install ffmpeg') then re-run this block"; missing=1
+  warn "ffmpeg not found — optional, only needed later for recording camera datasets, not for calibration/teleoperation. Skipping."
 fi
 if command -v git-lfs >/dev/null 2>&1; then ok "git-lfs found"; else
-  warn "git-lfs not found — install it (e.g. 'sudo apt install git-lfs') then re-run this block"; missing=1
-fi
-if command -v git >/dev/null 2>&1; then ok "git found"; else
-  warn "git not found — install it first"; missing=1
+  warn "git-lfs not found — optional, only needed later for recording/sharing datasets, not for calibration/teleoperation. Skipping."
 fi
 
 step "Setting up the Python environment"
@@ -56,14 +55,10 @@ step "Verifying the install"
 ./.venv/bin/python -c "import serial; import scservo_sdk; print('pyserial + feetech SDK import OK')"
 VERIFY_STATUS=$?
 
-if command -v git-lfs >/dev/null 2>&1; then
-  step "Pulling LFS test assets"
-  git lfs install && git lfs pull
-fi
-
-if [ "$missing" -eq 1 ]; then
-  printf '\n\033[1;33mPython side is ready, but install the missing system tools above before recording datasets with cameras.\033[0m\n'
-fi
+# Deliberately not running `git lfs pull` here — it downloads LeRobot's full test-fixture
+# dataset (used only by its own test suite), which can be a large, unnecessary download for
+# someone who just wants to calibrate/teleoperate. Only fetch LFS assets if/when a future
+# dataset-recording block actually needs them.
 
 if [ "$VERIFY_STATUS" -eq 0 ]; then
   printf '\n\033[1;32mLeRobot is installed and ready.\033[0m\n'

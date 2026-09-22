@@ -257,6 +257,10 @@ select {
   color: #f59e0b;
 }
 
+.check-optional {
+  color: #6b7280;
+}
+
 .react-flow__edge-path {
   stroke-width: 2.5;
 }

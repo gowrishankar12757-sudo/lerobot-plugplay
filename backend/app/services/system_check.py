@@ -8,8 +8,8 @@ import subprocess
 from app.config import LEROBOT_PYTHON, LEROBOT_REPO, LEROBOT_VENV_BIN
 
 
-def _check(id_: str, label: str, ok: bool, fix: str | None = None) -> dict:
-    return {"id": id_, "label": label, "ok": ok, "fix": fix}
+def _check(id_: str, label: str, ok: bool, fix: str | None = None, optional: bool = False) -> dict:
+    return {"id": id_, "label": label, "ok": ok, "fix": fix, "optional": optional}
 
 
 def run_checks() -> list[dict]:
@@ -31,10 +31,26 @@ def run_checks() -> list[dict]:
     checks.append(_check("git", "git installed", git_ok, "Install git (e.g. 'sudo apt install git')"))
 
     ffmpeg_ok = shutil.which("ffmpeg") is not None
-    checks.append(_check("ffmpeg", "ffmpeg installed (needed to record video datasets)", ffmpeg_ok, "sudo apt install ffmpeg"))
+    checks.append(
+        _check(
+            "ffmpeg",
+            "ffmpeg installed (optional — only for recording camera datasets, not calibration/teleoperation)",
+            ffmpeg_ok,
+            "sudo apt install ffmpeg",
+            optional=True,
+        )
+    )
 
     lfs_ok = shutil.which("git-lfs") is not None
-    checks.append(_check("git-lfs", "git-lfs installed", lfs_ok, "sudo apt install git-lfs"))
+    checks.append(
+        _check(
+            "git-lfs",
+            "git-lfs installed (optional — only for recording/sharing datasets, not calibration/teleoperation)",
+            lfs_ok,
+            "sudo apt install git-lfs",
+            optional=True,
+        )
+    )
 
     hardware_ok = False
     if LEROBOT_PYTHON.exists():
