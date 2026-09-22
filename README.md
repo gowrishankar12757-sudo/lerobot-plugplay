@@ -5,7 +5,35 @@ no robotics experience needed. Wire blocks together like connectors: Install →
 
 ## Setup
 
-Requires **git**, **Python 3.10+**, **Node.js 18+**.
+### 1. Install prerequisites
+
+Requires **git**, **Python 3.10+**, and **Node.js 18+**. Skip anything you already have.
+
+**Linux (Ubuntu/Debian):**
+```bash
+sudo apt install -y git python3
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install -y nodejs
+```
+
+**macOS (with [Homebrew](https://brew.sh)):**
+```bash
+brew install git python node
+```
+
+**Windows:** install [Git](https://git-scm.com/downloads), [Python](https://www.python.org/downloads/)
+(3.10+), and [Node.js LTS](https://nodejs.org/) from their official installers.
+
+**Any OS, no sudo/admin needed:** use [nvm](https://github.com/nvm-sh/nvm) for Node.js:
+```bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+# restart your terminal, then:
+nvm install 20
+```
+
+Check everything is on `PATH`: `git --version && python3 --version && node -v && npm -v`
+
+### 2. Clone and run
 
 ```bash
 git clone https://github.com/gowrishankar12757-sudo/lerobot-plugplay.git
