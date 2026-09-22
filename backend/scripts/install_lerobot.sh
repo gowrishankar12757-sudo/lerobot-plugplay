@@ -5,11 +5,20 @@
 set -uo pipefail
 
 REPO="${1:?usage: install_lerobot.sh <lerobot-repo-path>}"
-cd "$REPO" || exit 1
 
 step() { printf '\n\033[1;36m==> %s\033[0m\n' "$1"; }
 ok()   { printf '\033[1;32m  ok:\033[0m %s\n' "$1"; }
 warn() { printf '\033[1;33m  missing:\033[0m %s\n' "$1"; }
+
+if [ ! -d "$REPO/.git" ]; then
+  step "Cloning LeRobot (first run only)"
+  if ! command -v git >/dev/null 2>&1; then
+    printf '\n\033[1;31mgit is required to clone LeRobot — install it first (e.g. "sudo apt install git").\033[0m\n'
+    exit 1
+  fi
+  git clone https://github.com/huggingface/lerobot.git "$REPO" || exit 1
+fi
+cd "$REPO" || exit 1
 
 step "Checking system prerequisites"
 missing=0

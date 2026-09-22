@@ -16,7 +16,7 @@ def run_checks() -> list[dict]:
     checks = []
 
     checks.append(
-        _check("repo", f"LeRobot repo found at {LEROBOT_REPO}", LEROBOT_REPO.is_dir(), "Clone https://github.com/huggingface/lerobot first")
+        _check("repo", f"LeRobot repo found at {LEROBOT_REPO}", LEROBOT_REPO.is_dir(), "Run the Install block — it clones LeRobot automatically")
     )
     checks.append(
         _check(

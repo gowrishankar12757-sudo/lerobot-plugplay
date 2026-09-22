@@ -15,39 +15,59 @@ It does not reimplement any of LeRobot's hardware logic. Every block runs the re
 and work normally. The node graph (built with React Flow) only decides *when* a block is allowed to run —
 you can't calibrate before wiring in a port, and you can't teleoperate before both arms are calibrated.
 
-## Run it
+## Getting started (new machine, nothing installed yet)
+
+You only need **git**, **Python 3.10+**, and **Node.js 18+** installed system-wide — LeRobot itself gets
+cloned and installed for you by the app.
 
 ```bash
+git clone https://github.com/gowrishankar12757-sudo/lerobot-plugplay.git
+cd lerobot-plugplay
 ./start.sh
 ```
 
-Then open **http://127.0.0.1:5173**. First run installs the backend venv and frontend node_modules
-automatically.
+`start.sh` sets up its own backend venv and frontend `node_modules` on first run (takes a minute), then
+prints two URLs. Open **http://127.0.0.1:5173** in your browser.
 
-By default it drives the LeRobot checkout at `~/lerobot`. Override with:
+By default LeRobot itself gets cloned to `~/lerobot`. To use a different location (e.g. you already have
+a LeRobot checkout somewhere), stop `start.sh` and re-run with:
 
 ```bash
 LEROBOT_REPO_PATH=/path/to/lerobot ./start.sh
 ```
 
-## How to use the app
+## Walkthrough
 
-1. **Install Dependencies** block is on the canvas already. Click **Install now**, watch it run
-   (`uv sync` or a `venv`+`pip` fallback), and wait for the checklist to go green.
-2. Plug an arm's USB cable in. It appears at the top as a **detected USB device** — click **+ device** to
-   drop it on the canvas as a port block (optional — you can also just pick the port from a dropdown in
-   step 3).
+1. **Install Dependencies** block is on the canvas already. Click **Install now**. First run this clones
+   LeRobot itself, then installs its Python environment and the SO-101 (Feetech) motor driver — watch it
+   happen live in the block's terminal, and wait for the checklist to go green.
+2. Plug an arm's USB cable in. It appears at the top as a **detected USB device**.
 3. Click **+ Calibrate block**, pick its role (Leader/Follower), give it a name (e.g. `follower1`), and
-   pick its port — either from the block's own **Port** dropdown, or by dragging a wire from a port
-   block's dot into the calibrate block's input dot. Click **Start calibration** and follow the prompts
-   in the embedded terminal (or use the Enter / Ctrl+C shortcut buttons).
-4. Repeat for the other arm.
+   pick its port from the block's own **Port** dropdown (or drag a wire from a USB device block into it
+   instead — either way works). Click **Start calibration** and follow the prompts in the embedded
+   terminal (or use the Enter / Ctrl+C shortcut buttons).
+4. Repeat step 2–3 for the other arm (one Leader, one Follower).
 5. Click **+ Teleoperate block**, wire the Leader calibrate block into its top input and the Follower
    calibrate block into its bottom input, then **Start teleoperation**.
 
 Calibration files already on disk (`~/.cache/huggingface/lerobot/calibration/...`) are detected
-automatically — you don't have to recalibrate an arm that's already set up, just wire its port in and the
-Teleoperate block will treat it as ready.
+automatically — you don't have to recalibrate an arm that's already set up, just pick/wire its port in and
+the Teleoperate block will treat it as ready.
+
+## Troubleshooting
+
+- **`Permission denied: '/dev/ttyACM0'`** (Linux) — your user isn't in the `dialout` group yet, which owns
+  serial ports. Fix once, permanently:
+  ```bash
+  sudo usermod -aG dialout $USER
+  ```
+  Then **log out and back in** (group membership only applies to new sessions) and re-run `./start.sh`.
+- **ffmpeg / git-lfs missing** — the Install block's checklist will flag these. They're only needed for
+  recording camera datasets later, not for calibration/teleoperation, but install them when you see the
+  warning: `sudo apt install ffmpeg git-lfs` (Debian/Ubuntu) or your distro's equivalent.
+- **A block won't unlock ("🔒 ...")** — the banner tells you exactly what's missing (finish Install,
+  pick/wire a port, wire in a calibrated arm). Nothing is hidden; every field stays visible even while
+  locked.
 
 ## Architecture
 
